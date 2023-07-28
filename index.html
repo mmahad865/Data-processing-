@@ -2,27 +2,43 @@
 <html lang="en">
 
 <head>
-  <title>Form Template</title>
+  <title>Data Processing</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/forms.css">
   <style>
-    #output {
+    #widgets {
+      max-width: 600px;
+      margin: 5px;
+      padding: 2px;
+    }
+
+    #widgets>div {
+      padding: 5px;
+      min-height: 80px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
       border-radius: 5px;
-      min-height: 40px;
-      border: 1px solid black;
-      width: 50%;
-      margin: auto;
-      font-size: x-large;
+      position: relative;
+      /* required to place #pic to right */
+    }
+
+    div.pic img {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      max-width: 75px;
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1 class="page-header">Title Case</h1>
+    <h1 class="page-header">Data Processing</h1>
     <nav class="topnav" id="myTopnav">
       <a href="index.html" class="active">Home</a>
       <a href="#">Link</a>
@@ -33,20 +49,84 @@
 
   <main class="wrapper">
 
-    <h2 class="subheader">Place form code below:</h2>
-    <div id="output"></div>
-    <form method="get" action="" class="main-form">
-      <div>
-        <label for="input">Input</label><br>
-        <input type="text" name="input" id="input" placeholder="Input" required autofocus>
-      </div>
-      <input type="submit" id="submit">
-      </div>
-    </form>
-    <h3>Page Origins</h3>
+    <h2 class="subheader">Add your shiping info below</h2>
+    <div id="output">
+      <form method="get" action="" class="main-form">
+        <h2>Buy Our Widgets</h2>
+        <div id="widgets">
+          <div>
+            <b>Widget</b><br />
+            <p>Our Widgets are spring loaded and need no batteries!</p>
+            <p>At $3.99 they're a bargain!</p>
+            <p><label><input type="checkbox" name="Card" value="Widget"> Add to Card</label></p>
+            <div class="pic"><img src="images/widget.png" /></div>
+          </div>
+          <div>
+            <b>Sprocket</b><br />
+            <p>Our Sprockets are well made and hold up to extreme pressure!</p>
+            <p>They only cost $5.99!</p>
+            <p><label><input type="checkbox" name="Card" value="Sprockets"> Add to Card</label></p>
+            <div class="pic"><img src="images/sprocket.png" /></div>
+          </div>
+          <div>
+            <b>Thingy</b><br />
+            <p>Our Thingys have many uses, and people come up with new ones all the time!</p>
+            <p>Such a deal at $1.99!</p>
+            <p><label><input type="checkbox" name="Card" value="Thingy"> Add to Card</label></p>
+            <div class="pic"><img src="images/thingy.png" /></div>
+          </div>
+        </div>
+        <h2>Shipping Info</h2>
+        <div>
+          <label for="FirstName">First Name</label><br>
+          <input type="text" name="First_Name" id="FirstName" placeholder="First Name" required autofocus>
+        </div>
+        <div>
+          <label for="LastName">Last Name</label><br>
+          <input type="text" name="Last_Name" id="LastName" placeholder="Last Name" required>
+        </div>
+        <div>
+          <label for="Email">Email</label><br>
+          <input type="email" name="Email" id="Email" placeholder="Email" required>
+        </div>
+        <div>
+          <label for="Address">Address</label><br>
+          <input type="text" name="Address" id="Address" placeholder="Address" required>
+        </div>
+        <div>
+          <div>
+            <label for="City">City</label><br>
+            <input type="text" name="City" id="City" placeholder="City" required>
+          </div>
+          <div>
+            <br><label for="State">State</label><br>
+            <select name="State" id="State" required>
+              <option value="">Please select state</option>
+              <option value="AK">Alaska</option>
+              <option value="FL">Florida</option>
+              <option value="CA">California</option>
+              <option value="WA">Wahington</option>
+            </select>
+          </div>
+          <div>
+            <br><label for="PostalCode">PostalCode</label><br>
+            <input type="text" name=" Postal_Code" id="PostalCode" placeholder="Postal Code" required>
+          </div>
+          <div>
+            <br><label for="Notes">Notes</label><br>
+            <textarea name="Notes" id="Notes" placeholder="Notes" rows="4" cols="36"></textarea>
+          </div>
+          <input type="submit">
+        </div>
+      </form>
+    </div>
+    <p>
+      This page uses querystring to process data, after submitted the car item is added up and Upperased the first letter!.
+    </p>
     <footer>
+      
       <p><small>&copy; 2021-<span id="this-year"></span> by
-          Mahad, All Rights Reserved ~
+          Mahad Ali, All Rights Reserved ~
           <a id="html-checker" href="#" target="_blank">Check HTML</a> ~
           <a id="css-checker" href="#" target="_blank">Check CSS</a></small>
       </p>
@@ -54,18 +134,86 @@
   </main>
   <script src="js/main.js"></script>
   <script>
-    function titleCase(str) {
-      return str = str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    }
-    const mySubmit = document.querySelector("#submit");
-    console.log(mySubmit);
 
-    mySubmit.addEventListener("click", function (ev) {
-      ev.preventDefault();
-      const myInput = document.querySelector("#input");
-      const myOutput = document.querySelector("#output");
-      myOutput.innerHTML = titleCase(myInput.value);
-    });
+    function titleCase(str) {
+      str = str.toLowerCase().split(' ');
+      for (var i = 0; i < str.length; i++) {
+        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+      }
+      return str.join(' ');
+    }
+
+    const queryString = window.location.search;
+
+    const urlParams = new URLSearchParams(queryString);
+
+    if (queryString.length > 0) {//form submitted!
+      let myOutput = "";//will store data for display
+
+      let myShipping = "";
+      let myCart = "";
+      let myTotal = 0;
+
+      urlParams.forEach(function (value, key) {
+        //console.log(value);
+
+        if (key == "Cart") {//process card
+          //alert(value);
+
+          switch (value) {
+            case "Widget":
+              myCart += `Widget: $3.99<br>`;
+              myTotal += 3.99;
+              break;
+
+            case "Sprocket":
+              myCart += `Sprocket: $5.99<br>`;
+              myTotal += 5.99;
+              break;
+
+            case "Thingy":
+              myCart += `Thingy: $1.99<br>`;
+              myTotal += 1.99;
+              break;
+          }//end card items
+
+        } else {//process shipping
+
+          key = key.split("_").join(" ");//cut underscore and add us a space
+          //title case first, last, address, city only 
+          switch (key) {
+            case "First Name":
+            case "Last Name":
+            case "Address":
+            case "City":
+              value = titleCase(value);
+              break;
+          }//end card items
+        }
+
+        myShipping += `<p>${key}: ${value}</p>`;//looping through data
+
+      });
+
+      myOutput = `<div id="container">`;//will store data for display
+
+      myShipping = "<h3>Shipping Info</h3>" + myShipping;
+
+
+      myCart = `<h3>Cart Contents</h3>
+       <p>${myCart}</p>
+       <p>Total: $${myTotal}</p>`;
+
+      myOutput += myCart + myShipping;
+
+      myOutput += `<p><a href="index.html">CLEAR</a></p>`;
+      myOutput += `</div>`;
+
+      document.querySelector("#output").innerHTML = myOutput;
+
+    }
+
+
   </script>
 </body>
 
